@@ -1,4 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUserAlt } from '@fortawesome/fontawesome-free-solid';
+
 
 
 const ChatArea = () => {
@@ -10,30 +14,44 @@ const ChatArea = () => {
 
 
                     <div>
-                        <input type="text" placeholder="Search your friedns" class="input w-full max-w-xs bg-gray-100"
+                        <input type="text" placeholder="Search your friedns" className="input w-full max-w-xs bg-gray-100"
 
                         />
                     </div>
+                    <ul className="flex justify-between p-4 ">
+                        {/* <!-- Sidebar content here --> */}
+                        <li>
+                            <Link to='/chats'>
+                                <span className='text-2xl'>
+                                    <FontAwesomeIcon
+                                        icon={faUserAlt}
+                                        className='text-gray-400  hover:bg-sky-200'
+                                    />
+                                </span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to='/chats/groupchats'>
+                                <span className='text-2xl'>
+                                    <FontAwesomeIcon
+                                        icon={faUserAlt}
+                                        className='text-gray-400  hover:bg-sky-200'
+                                    />
+                                </span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to='/chats/stroy'>
+
+                            </Link>
+                        </li>
+                    </ul>
 
                     <div>
 
-                    </div>
 
-                    <div class="card text-primary-content border mt-3">
-                        <div class="card-body">
-                            <h2 class="card-title">Card title!</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn">Buy Now</button>
-                            </div>
-
-                            <h2 class="card-title">Card title!</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn">Buy Now</button>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
 
