@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatArea from '../../../../Components/ChatArea/ChatArea';
 import ChatBox from '../../../../Components/ChatBox/ChatBox';
+import ReceiverDetails from '../../../../Components/ReceiverDetails/ReceiverDetails';
 import Header from '../Header/Header';
 
 const Chats = () => {
@@ -21,8 +22,8 @@ const Chats = () => {
                 </div>
 
 
-                <div className='border'>
-                    <h2>omammasdfgfdd</h2>
+                <div className=''>
+                    <ReceiverDetails></ReceiverDetails>
                 </div>
 
             </div>
