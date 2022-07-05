@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserAlt } from '@fortawesome/fontawesome-free-solid';
+import { faUsers, faUserAlt } from '@fortawesome/fontawesome-free-solid';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -25,7 +26,7 @@ const ChatArea = () => {
                                 <span className='text-2xl'>
                                     <FontAwesomeIcon
                                         icon={faUserAlt}
-                                        className='text-gray-400  hover:bg-sky-200'
+                                        className='text-gray-400  hover:text-sky-300'
                                     />
                                 </span>
                             </Link>
@@ -35,8 +36,8 @@ const ChatArea = () => {
                             <Link to='/chats/groupchats'>
                                 <span className='text-2xl'>
                                     <FontAwesomeIcon
-                                        icon={faUserAlt}
-                                        className='text-gray-400  hover:bg-sky-200'
+                                        icon={faUsers}
+                                        className='text-gray-400  hover:text-sky-300'
                                     />
                                 </span>
                             </Link>
@@ -44,7 +45,12 @@ const ChatArea = () => {
 
                         <li>
                             <Link to='/chats/stroy'>
-
+                                <span className='text-2xl'>
+                                    <FontAwesomeIcon
+                                        icon={faGear}
+                                        className='text-gray-400  hover:text-sky-300'
+                                    />
+                                </span>
                             </Link>
                         </li>
                     </ul>
