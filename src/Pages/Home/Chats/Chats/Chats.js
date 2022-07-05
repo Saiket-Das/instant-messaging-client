@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatArea from '../../../../Components/ChatArea/ChatArea';
+import ChatBox from '../../../../Components/ChatBox/ChatBox';
 import Header from '../Header/Header';
 
 const Chats = () => {
@@ -15,8 +16,8 @@ const Chats = () => {
                 </div>
 
 
-                <div className='border col-span-2'>
-                    <h2>omammasdfgfdd</h2>
+                <div className=' col-span-2'>
+                    <ChatBox></ChatBox>
                 </div>
 
 

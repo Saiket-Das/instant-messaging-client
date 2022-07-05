@@ -18,8 +18,8 @@ const ChatArea = () => {
                         <input type="text" placeholder="Search your friedns" className="input w-full max-w-xs bg-gray-100" />
                     </div>
 
-                    <div class="">
-                        <div class="drawer-content  ">
+                    <div className="">
+                        <div className="drawer-content  ">
 
                             <ul className=" flex justify-between p-4 ">
 
