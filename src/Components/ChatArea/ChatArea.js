@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserAlt } from '@fortawesome/fontawesome-free-solid';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
@@ -9,54 +9,61 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 const ChatArea = () => {
     return (
 
-        <div className='shadow-2xl m-3 rounded-lg	'>
-            <div className=' h-max-screen'>
+        <div className='shadow-2xl m-3 rounded-lg max-h-50'>
+            <div className=''>
                 <div className='p-4'>
 
 
                     <div>
-                        <input type="text" placeholder="Search your friedns" className="input w-full max-w-xs bg-gray-100"
-
-                        />
+                        <input type="text" placeholder="Search your friedns" className="input w-full max-w-xs bg-gray-100" />
                     </div>
-                    <ul className="flex justify-between p-4 ">
-                        {/* <!-- Sidebar content here --> */}
-                        <li>
-                            <Link to='/chats'>
-                                <span className='text-2xl'>
-                                    <FontAwesomeIcon
-                                        icon={faUserAlt}
-                                        className='text-gray-400  hover:text-sky-300'
-                                    />
-                                </span>
-                            </Link>
-                        </li>
 
-                        <li>
-                            <Link to='/chats/groupchats'>
-                                <span className='text-2xl'>
-                                    <FontAwesomeIcon
-                                        icon={faUsers}
-                                        className='text-gray-400  hover:text-sky-300'
-                                    />
-                                </span>
-                            </Link>
-                        </li>
+                    <div class="">
+                        <div class="drawer-content  ">
 
-                        <li>
-                            <Link to='/chats/stroy'>
-                                <span className='text-2xl'>
-                                    <FontAwesomeIcon
-                                        icon={faGear}
-                                        className='text-gray-400  hover:text-sky-300'
-                                    />
-                                </span>
-                            </Link>
-                        </li>
-                    </ul>
+                            <ul className=" flex justify-between p-4 ">
 
-                    <div>
+                                {/* ------ SINGLE USER CHAT ------ */}
+                                <li>
+                                    <Link to='/chats'>
+                                        <span className='text-2xl'>
+                                            <FontAwesomeIcon
+                                                icon={faUserAlt}
+                                                className='text-gray-400  hover:text-sky-300'
+                                            />
+                                        </span>
+                                    </Link>
+                                </li>
 
+
+                                {/* ------ GROUP CHAT ------ */}
+                                <li>
+                                    <Link to='/chats/groupchats'>
+                                        <span className='text-2xl'>
+                                            <FontAwesomeIcon
+                                                icon={faUsers}
+                                                className='text-gray-400  hover:text-sky-300'
+                                            />
+                                        </span>
+                                    </Link>
+                                </li>
+
+                                {/* ------ SEETING OR STORY ------ */}
+                                <li>
+                                    <Link to='/chats/stroy'>
+                                        <span className='text-2xl'>
+                                            <FontAwesomeIcon
+                                                icon={faGear}
+                                                className='text-gray-400  hover:text-sky-300'
+                                            />
+                                        </span>
+                                    </Link>
+                                </li>
+                            </ul>
+
+
+                            <Outlet></Outlet>
+                        </div>
 
                     </div>
                 </div>

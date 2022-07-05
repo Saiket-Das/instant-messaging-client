@@ -23,21 +23,42 @@ const Header = () => {
                             <div className="indicator">
                                 <FontAwesomeIcon
                                     icon={faBell}
-                                    className='text-gray-400 hover:text-white'
+                                    className='text-gray-400 hover:text-white text-xl'
                                 />
                                 <span className="badge badge-sm indicator-item">8</span>
                             </div>
                         </label>
 
-                        {/* <div tabIndex="0" className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
-                            <div className="card-body">
-                                <span className="font-bold text-lg">8 Items</span>
-                                <span className="text-info">Subtotal: $999</span>
-                                <div className="card-actions">
-                                    <button className="btn btn-primary btn-block">View cart</button>
+                        <div tabIndex="0" className="mt-3 card card-compact dropdown-content w-80 bg-base-100 shadow">
+                            <div class="shadow" role="alert">
+                                <div class="flex">
+                                    <div class="bg-blue-500 w-16 text-center p-2">
+                                        <div class="flex justify-center h-full items-center">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="h-6 w-6 text-white"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white border-r-4 border-blue-400 w-full p-4">
+                                        <div>
+                                            <p class="text-gray-600 font-bold">New Message</p>
+                                            <p class="text-gray-600 text-sm">Your message has been send to Jack</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                     </div>
                     <div className="dropdown dropdown-end">
