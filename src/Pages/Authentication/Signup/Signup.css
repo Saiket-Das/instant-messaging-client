@@ -1,0 +1,33 @@
+.login-email,
+.login-password,
+.signup-firstName,
+.signup-lastName,
+.signup-email,
+.signup-password,
+.signup-confirmPass {
+    /* padding: 12px 20px; */
+    /* margin: 8px 0; */
+    border: none;
+    border-bottom: 2px solid rgb(183, 183, 183);
+}
+
+.login-email::placeholder,
+.login-password::placeholder,
+.signup-firstName::placeholder,
+.signup-lastName::placeholder,
+.signup-email::placeholder,
+.signup-password::placeholder,
+.signup-confirmPass::placeholder {
+    text-align: start;
+    color: rgb(112, 112, 112);
+}
+
+.login-email:focus,
+.login-password:focus,
+.signup-firstName:focus,
+.signup-lastName:focus,
+.signup-email:focus,
+.signup-password:focus,
+.signup-confirmPass:focus {
+    border-bottom: 0px solid;
+}
