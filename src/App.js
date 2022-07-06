@@ -4,6 +4,7 @@ import Login from './Pages/Authentication/Login/Login';
 import { Routes, Route } from "react-router-dom";
 import SingleChat from './Components/ChatArea/SingleChat';
 import GroupChat from './Components/ChatArea/GroupChat';
+import Signup from './Pages/Authentication/Signup/Signup';
 
 
 
@@ -18,6 +19,7 @@ function App() {
         </Route>
 
         <Route path='/' element={<Login></Login>}></Route>
+        <Route path='/signup' element={<Signup></Signup>}></Route>
       </Routes>
     </div>
   );
