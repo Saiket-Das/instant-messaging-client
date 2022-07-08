@@ -1,17 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../../Assets/logo.jpg'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
+import { signOut } from 'firebase/auth';
 
 
 const Header = () => {
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
+    const [myPhoto, setMyPhoto] = useState('')
 
-    // console.log(user.displayName)
-    console.log(user);
+
+
+    useEffect(() => {
+        if (user) {
+            setMyPhoto(user.photoURL);
+        }
+    }, [user]);
+
+
+
+    const logOut = () => {
+        signOut(auth);
+        navigate('/');
+        localStorage.removeItem('accessToken');
+    };
 
     return (
         <div>
@@ -71,7 +87,7 @@ const Header = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src={user.photoURL} alt='' />
+                                <img src={myPhoto} alt='' />
                             </div>
                         </label>
 
@@ -83,7 +99,8 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li><Link to=''>Settings</Link></li>
-                            <li><Link to=''>Logout</Link></li>
+                            <li><button onClick={logOut}>Sign out</button> </li>
+
                         </ul>
                     </div>
                 </div>

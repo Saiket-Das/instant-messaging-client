@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import googlePng from '../../../Assets/google.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
 
 
 
 
 const Login = () => {
-    const [
-        signInWithEmailAndPassword, emailUser, emailLoading, emailError,
-    ] = useSignInWithEmailAndPassword(auth);
+    const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
+    const [passShown, setPassShown] = useState(false);
 
 
     let errorMsg;
@@ -55,19 +56,19 @@ const Login = () => {
         }
 
     }
+    const onSubmit = (data) => {
+        console.log(data);
+        signInWithEmailAndPassword(data.email, data.password);
+    };
 
     if (emailLoading || googleLoading) {
         return <p>Loading...</p>;
     }
 
     if (emailUser || googleUser) {
-        navigate('/')
+        navigate('/chats')
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
-        signInWithEmailAndPassword(data.email, data.password);
-    };
 
     return (
         <div className='container mx-auto my-auto'>
@@ -107,21 +108,38 @@ const Login = () => {
 
                             {/* ----------- PASSWORD  -----------  */}
                             <div className="form-control w-full max-w-xs">
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    className="input rounded-none input-black w-full max-w-xs p-0 login-password"
-                                    {...register("password", {
-                                        required: {
-                                            value: true,
-                                            message: 'Password is required'
-                                        },
-                                        minLength: {
-                                            value: 6,
-                                            message: 'Must be 6 characters or longer'
-                                        }
-                                    })}
-                                />
+                                <div className='flex'>
+                                    <input
+                                        type={passShown ? 'text' : 'password'}
+                                        placeholder="Password"
+                                        className="input rounded-none input-black w-full max-w-xs p-0 login-password"
+                                        {...register("password", {
+                                            required: {
+                                                value: true,
+                                                message: 'Password is required'
+                                            },
+                                            minLength: {
+                                                value: 6,
+                                                message: 'Must be 6 characters or longer'
+                                            }
+                                        })}
+                                    />
+
+                                    <div className="swap swap-rotate absolute  ml-72"
+                                        onClick={() => setPassShown(!passShown)}
+                                    >
+                                        <input type="checkbox" />
+                                        <FontAwesomeIcon
+                                            icon={faEye}
+                                            className='swap-on fill-current w-5 h-12  '
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faEyeSlash}
+                                            className='swap-off fill-current w-5 h-12  '
+                                        />
+                                    </div>
+                                </div>
+
                                 <label className="label">
                                     {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                                     {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
