@@ -9,6 +9,10 @@ import auth from '../../../../firebase.init';
 
 const Header = () => {
     const [user] = useAuthState(auth);
+
+    // console.log(user.displayName)
+    console.log(user);
+
     return (
         <div>
             <div className="navbar bg-base-100 mx-auto px-10">
@@ -67,7 +71,7 @@ const Header = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Notification Bell Icon" />
+                                <img src={user.photoURL} alt='' />
                             </div>
                         </label>
 

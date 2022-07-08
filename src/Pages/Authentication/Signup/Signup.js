@@ -7,8 +7,7 @@ import './Signup.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import { faEye, faEyeSlash, faUpload } from '@fortawesome/fontawesome-free-solid';
-import { toast } from 'react-toastify';
+import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
 
 
 
@@ -67,8 +66,10 @@ const Signup = () => {
                     console.log(err);
                 });
         }
-        await createUserWithEmailAndPassword(data.email, data.password);
-        await updateProfile({ displayName: data.name });
+        if (myPhoto) {
+            await createUserWithEmailAndPassword(data.email, data.password);
+            await updateProfile({ displayName: data.name, photoURL: myPhoto });
+        }
         // else {
         //     toast({
         //         title: "Please upload an Image!",
@@ -101,7 +102,7 @@ const Signup = () => {
                                     type="text"
                                     placeholder="Your Name"
                                     className="input rounded-none input-black w-full max-w-xs p-0 signup-firstName "
-                                    {...register("firstname", {
+                                    {...register("name", {
                                         required: {
                                             value: true,
                                             message: 'Firstname is required'
