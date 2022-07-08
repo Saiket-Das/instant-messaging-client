@@ -31,3 +31,25 @@
 .signup-confirmPass:focus {
     border-bottom: 0px solid;
 }
+
+
+
+/* .service-image::-webkit-file-upload-button {
+    visibility: hidden;
+    overflow: hidden;
+
+} */
+
+
+/* .add-service-icon-image {
+    width: 170px;
+    height: 40px;
+
+} */
+
+
+/* .add-service-image::before {
+    content: 'Upload image';
+    font-weight: 400;
+    padding-left: 0px;
+} */

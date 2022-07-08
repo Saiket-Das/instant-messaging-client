@@ -7,7 +7,8 @@ import './Signup.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
+import { faEye, faEyeSlash, faUpload } from '@fortawesome/fontawesome-free-solid';
+import { toast } from 'react-toastify';
 
 
 
@@ -24,14 +25,8 @@ const Signup = () => {
     const navigate = useNavigate()
     const [passShown, setPassShown] = useState(false);
     const [confirmPassShown, setConfirmPassShown] = useState(false);
+    const [myPhoto, setMyPhoto] = useState('')
 
-    // const togglePassVisiblity = () => {
-    //     setPassShown(passShown ? false : true);
-    // };
-
-    // const toggleConfirmPassVisiblity = () => {
-    //     setConfirmPassShown(confirmPassShown ? false : true);
-    // };
 
     let errorMsg;
     if (error || updateError) {
@@ -50,11 +45,41 @@ const Signup = () => {
 
 
     const onSubmit = async (data) => {
-        console.log(data)
-        console.log(data.name)
-        console.log(typeof data.name)
-        // await createUserWithEmailAndPassword(data.email, data.password);
-        // await updateProfile({ displayName: data.name });
+        console.log(data);
+        console.log(data.image[0]);
+        const image = data.image[0]
+
+        if (image.type === "image/jpeg" || image.type === "image/png") {
+            const data = new FormData();
+            data.append("file", image);
+            data.append("upload_preset", "chat-app");
+            data.append("cloud_name", "saiketdas");
+            fetch("https://api.cloudinary.com/v1_1/saiketdas/image/upload", {
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setMyPhoto(data.url.toString());
+                    console.log(data.url.toString());
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+        // else {
+        //     toast({
+        //         title: "Please upload an Image!",
+        //         status: "warning",
+        //         duration: 5000,
+        //         isClosable: true,
+        //         position: "bottom",
+        //     });
+        //     return;
+        // }
+
     };
 
 
@@ -70,11 +95,11 @@ const Signup = () => {
                         {/* ----------- FORM  -----------  */}
                         <form onSubmit={handleSubmit(onSubmit)}>
 
-                            {/* ----------- FIRST NAME  -----------  */}
+                            {/* ----------- YOUR NAME  -----------  */}
                             <div className="form-control w-full max-w-xs">
                                 <input
                                     type="text"
-                                    placeholder="First Name"
+                                    placeholder="Your Name"
                                     className="input rounded-none input-black w-full max-w-xs p-0 signup-firstName "
                                     {...register("firstname", {
                                         required: {
@@ -88,31 +113,6 @@ const Signup = () => {
                                 </label>
                             </div>
 
-
-
-                            {/* ----------- LAST NAME  -----------  */}
-                            <div className="form-control w-full max-w-xs ">
-                                <div className='flex'>
-                                    <input
-                                        type="text"
-                                        placeholder="Last Name"
-                                        className="input rounded-none input-black w-full max-w-xs p-0 signup-lastName"
-                                        {...register("lastname", {
-                                            required: {
-                                                value: true,
-                                                message: 'Last name is required'
-                                            }
-                                        })}
-
-
-                                    />
-                                </div>
-
-
-                                <label className="label">
-                                    {errors.lastname?.type === 'required' && <span className="label-text-alt text-red-500">{errors.lastname.message}</span>}
-                                </label>
-                            </div>
 
 
                             {/* ----------- USERNAME OR EMAIL  -----------  */}
@@ -222,27 +222,31 @@ const Signup = () => {
 
 
 
-                            {/* ----------- LAST NAME  -----------  */}
-                            <div className="form-control w-full max-w-xs ">
-                                <div className='flex'>
+                            {/* ----------- IMAGE  -----------  */}
+                            <div className="form-control w-full max-w-xs mt-3">
+                                <div className=''>
+                                    {/* <FontAwesomeIcon
+                                        icon={faUpload} className='text-primary absolute ' /> */}
                                     <input
                                         type="file"
-                                        placeholder="Last Name"
-                                        className="input rounded-none input-black w-full max-w-xs p-0 signup-lastName"
-                                        {...register("photo", {
+                                        id='file'
+                                        // placeholder='Upload Image'
+                                        className="file input rounded-none input-black w-full max-w-xs px-0 pb-8 signup-confirmPass add-service-image input-xs"
+                                        {...register("image", {
                                             required: {
                                                 value: true,
-                                                message: 'Last name is required'
+                                                message: 'Image is required'
                                             }
                                         })}
                                     />
                                 </div>
-
-
                                 <label className="label">
-                                    {errors.lastname?.type === 'required' && <span className="label-text-alt text-red-500">{errors.lastname.message}</span>}
+                                    {errors.image?.type === 'required' && <span className="label-text-alt text-red-500">{errors.image.message}</span>}
                                 </label>
                             </div>
+
+
+
 
 
 

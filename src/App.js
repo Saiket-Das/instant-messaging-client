@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import SingleChat from './Components/ChatArea/SingleChat';
 import GroupChat from './Components/ChatArea/GroupChat';
 import Signup from './Pages/Authentication/Signup/Signup';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -21,6 +23,9 @@ function App() {
         <Route path='/' element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
       </Routes>
+
+      <ToastContainer />
+
     </div>
   );
 }
