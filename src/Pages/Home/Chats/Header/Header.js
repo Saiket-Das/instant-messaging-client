@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faClose } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../../Assets/logo.jpg'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../../firebase.init';
@@ -13,12 +13,12 @@ const Header = () => {
     const navigate = useNavigate();
     const [myPhoto, setMyPhoto] = useState('')
 
+
     useEffect(() => {
         if (user) {
             setMyPhoto(user.photoURL);
         }
     }, [user]);
-
 
 
     const logOut = () => {
@@ -27,6 +27,7 @@ const Header = () => {
         navigate('/');
         localStorage.removeItem('accessToken');
     };
+
 
     return (
         <div>
@@ -65,8 +66,6 @@ const Header = () => {
                                             >
                                                 <path
                                                     strokeLinecap="round"
-                                                    // strokeLinecap-linejoin="round"
-                                                    // ="2"
                                                     d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                                                 />
                                             </svg>
@@ -92,19 +91,43 @@ const Header = () => {
 
                         <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <Link to='' className="justify-between">
-                                    Profile
-                                    {/* <span className="badge">New</span> */}
-                                </Link>
+                                <label htmlFor="my-profile-modal" >My Profile</label>
                             </li>
                             <li><Link to=''>Settings</Link></li>
                             <li><button onClick={logOut}>Sign out</button> </li>
 
                         </ul>
                     </div>
+
+
+                    {/* ---------- User Info Profile Modal ---------- */}
+                    <input type="checkbox" id="my-profile-modal" className="modal-toggle" />
+                    <div className="modal">
+                        <div className="modal-box">
+
+                            <div className='flex'>
+                                {/* <img src={myPhoto} className='w-32' alt="" /> */}
+                                <div>
+                                    <h3 className="font-semibold text-lg">{user?.displayName}</h3>
+                                    <p>{user?.email}</p>
+                                </div>
+
+                            </div>
+
+                            <div className="modal-action">
+                                <label htmlFor="my-profile-modal" className="btn btn-ghost hover:text-white text-xl">
+                                    <FontAwesomeIcon
+                                        icon={faClose}
+                                        className='text-red-400'
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
