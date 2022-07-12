@@ -8,6 +8,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faMessage } from '@fortawesome/free-solid-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import Loading from '../../../Components/Loading/Loading';
 
 
 
@@ -24,7 +27,9 @@ const Signup = () => {
     const navigate = useNavigate()
     const [passShown, setPassShown] = useState(false);
     const [confirmPassShown, setConfirmPassShown] = useState(false);
-    const [myPhoto, setMyPhoto] = useState('')
+    const [myPhoto, setMyPhoto] = useState()
+    const [photoLoading, setPhotoLoading] = useState(false);
+
 
 
     let errorMsg;
@@ -34,7 +39,7 @@ const Signup = () => {
         </p>
     }
     if (loading || updating) {
-        return <p>Loading...</p>;
+        return <Loading></Loading>;
     }
 
     if (user) {
@@ -43,14 +48,16 @@ const Signup = () => {
 
 
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        console.log(data.image[0]);
-        const image = data.image[0]
+    const postPhoto = (photo) => {
+        setPhotoLoading(true)
+        if (photo === undefined) {
+            toast.error(`Please select an Iamge `);
+            return;
+        }
 
-        if (image.type === "image/jpeg" || image.type === "image/png") {
+        if (photo.type === "image/jpeg" || photo.type === "image/png" || photo.type === 'image/jpg') {
             const data = new FormData();
-            data.append("file", image);
+            data.append("file", photo);
             data.append("upload_preset", "chat-app");
             data.append("cloud_name", "saiketdas");
             fetch("https://api.cloudinary.com/v1_1/saiketdas/image/upload", {
@@ -60,27 +67,43 @@ const Signup = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     setMyPhoto(data.url.toString());
-                    console.log(data.url.toString());
+                    setPhotoLoading(false)
                 })
                 .catch((err) => {
                     console.log(err);
+                    setPhotoLoading(false)
                 });
         }
+    }
+
+
+
+
+    const onSubmit = async (data) => {
+
+        const email = data.email;
+        const password = data.password;
+        const name = data.name;
         if (myPhoto) {
+            try {
+                console.log(name)
+                const confiq = {
+                    header: {
+                        "Content-type": "application/json"
+                    }
+                }
+                const { data } = await axios.post('http://localhost:5000/api/user', {
+                    name, email, password, myPhoto,
+                }, confiq);
+
+                localStorage.setItem("userInfo", JSON.stringify(data));
+                toast.success(`Login successfully`);
+            }
+            catch {
+            }
             await createUserWithEmailAndPassword(data.email, data.password);
             await updateProfile({ displayName: data.name, photoURL: myPhoto });
         }
-        // else {
-        //     toast({
-        //         title: "Please upload an Image!",
-        //         status: "warning",
-        //         duration: 5000,
-        //         isClosable: true,
-        //         position: "bottom",
-        //     });
-        //     return;
-        // }
-
     };
 
 
@@ -161,19 +184,19 @@ const Signup = () => {
                                     />
 
 
-                                    <div className="swap swap-rotate absolute  ml-72"
-                                        onClick={() => setPassShown(!passShown)}
-                                    >
+                                    <label className="swap swap-rotate absolute  ml-72">
                                         <input type="checkbox" />
                                         <FontAwesomeIcon
-                                            icon={faEye}
+                                            onClick={() => setPassShown(!passShown)}
+                                            icon={faEyeSlash}
                                             className='swap-on fill-current w-5 h-12  '
                                         />
                                         <FontAwesomeIcon
-                                            icon={faEyeSlash}
+                                            onClick={() => setPassShown(!passShown)}
+                                            icon={faEye}
                                             className='swap-off fill-current w-5 h-12  '
                                         />
-                                    </div>
+                                    </label>
                                 </div>
 
 
@@ -199,19 +222,21 @@ const Signup = () => {
                                         })}
                                     />
 
-                                    <div className="swap swap-rotate absolute  ml-72"
-                                        onClick={() => setConfirmPassShown(!confirmPassShown)}
-                                    >
+                                    <label className="swap swap-rotate absolute  ml-72">
                                         <input type="checkbox" />
                                         <FontAwesomeIcon
-                                            icon={faEye}
+                                            onClick={() => setConfirmPassShown(!confirmPassShown)}
+                                            icon={faEyeSlash}
                                             className='swap-on fill-current w-5 h-12  '
                                         />
                                         <FontAwesomeIcon
-                                            icon={faEyeSlash}
+                                            onClick={() => {
+                                                setConfirmPassShown(!confirmPassShown)
+                                            }}
+                                            icon={faEye}
                                             className='swap-off fill-current w-5 h-12  '
                                         />
-                                    </div>
+                                    </label>
                                 </div>
 
                                 <label className="label">
@@ -233,12 +258,14 @@ const Signup = () => {
                                         id='file'
                                         // placeholder='Upload Image'
                                         className="file input rounded-none input-black w-full max-w-xs px-0 pb-8 signup-confirmPass add-service-image input-xs"
-                                        {...register("image", {
-                                            required: {
-                                                value: true,
-                                                message: 'Image is required'
-                                            }
-                                        })}
+                                        onChange={(e) => postPhoto(e.target.files[0])}
+
+                                    // {...register("photo", {
+                                    //     required: {
+                                    //         value: true,
+                                    //         message: 'Image is required'
+                                    //     }
+                                    // })}
                                     />
                                 </div>
                                 <label className="label">
@@ -247,17 +274,18 @@ const Signup = () => {
                             </div>
 
 
-
-
-
-
-                            <input className='btn btn-primary w-full max-w-xs mt-4 text-white' type="submit" value="Create an account" />
+                            <input
+                                className='btn btn-primary w-full max-w-xs mt-4 text-white'
+                                disabled={photoLoading}
+                                type="submit"
+                                value="Create an account"
+                            />
 
                         </form>
                         {errorMsg}
 
                         <p className='text-center'>Already have an account?
-                            <span className='text-primary font-semibold'>
+                            <span className='text-primary font-semibold' >
                                 <Link to='/'> Login </Link>
                             </span>
                         </p>

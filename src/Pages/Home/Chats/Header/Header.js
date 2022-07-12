@@ -13,8 +13,6 @@ const Header = () => {
     const navigate = useNavigate();
     const [myPhoto, setMyPhoto] = useState('')
 
-
-
     useEffect(() => {
         if (user) {
             setMyPhoto(user.photoURL);

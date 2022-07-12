@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
-import googlePng from '../../../Assets/google.png'
+// import googlePng from '../../../Assets/google.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -56,9 +58,36 @@ const Login = () => {
         }
 
     }
-    const onSubmit = (data) => {
+
+
+
+    // SUBMIT THE FORM 
+    const onSubmit = async (data) => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password);
+
+        const email = data.email;
+        const password = data.password;
+
+        console.log(data.email)
+
+        try {
+            const confiq = {
+                header: {
+                    'Content-type': 'application/json'
+                }
+            }
+            const { userInfo } = await axios.post('http://localhost:5000/api/user/login', { email, password }, confiq);
+
+            console.log(userInfo)
+            signInWithEmailAndPassword(data.email, data.password);
+            toast.success(`Login successfully`);
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        }
+
+        catch (error) {
+
+        }
+
     };
 
     if (emailLoading || googleLoading) {
@@ -125,19 +154,19 @@ const Login = () => {
                                         })}
                                     />
 
-                                    <div className="swap swap-rotate absolute  ml-72"
-                                        onClick={() => setPassShown(!passShown)}
-                                    >
+                                    <label className="swap swap-rotate absolute  ml-72">
                                         <input type="checkbox" />
                                         <FontAwesomeIcon
-                                            icon={faEye}
+                                            onClick={() => setPassShown(!passShown)}
+                                            icon={faEyeSlash}
                                             className='swap-on fill-current w-5 h-12  '
                                         />
                                         <FontAwesomeIcon
-                                            icon={faEyeSlash}
+                                            onClick={() => setPassShown(!passShown)}
+                                            icon={faEye}
                                             className='swap-off fill-current w-5 h-12  '
                                         />
-                                    </div>
+                                    </label>
                                 </div>
 
                                 <label className="label">
@@ -164,11 +193,11 @@ const Login = () => {
                             </span>
                         </p>
 
-                        <div className="divider">OR</div>
+                        {/* <div className="divider">OR</div> */}
 
 
                         {/* LOGIN WITH GOOGLE */}
-                        <button
+                        {/* <button
                             onClick={() => signInWithGoogle()}
                             className="btn btn-secondary w-full max-w-xs mt-4 text-white">
 
@@ -177,14 +206,14 @@ const Login = () => {
                                 <p>Continue with Google</p>
                                 <p></p>
                             </div>
-                        </button>
+                        </button> */}
 
                     </div>
                 </div>
-            </div>
+            </div >
 
 
-        </div>
+        </div >
     );
 };
 
