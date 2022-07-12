@@ -23,6 +23,7 @@ const Header = () => {
 
     const logOut = () => {
         signOut(auth);
+        localStorage.removeItem("userInfo");
         navigate('/');
         localStorage.removeItem('accessToken');
     };

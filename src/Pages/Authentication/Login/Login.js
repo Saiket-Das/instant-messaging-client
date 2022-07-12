@@ -8,21 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-solid';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loading from '../../../Components/Loading/Loading';
 
 
 
 
 const Login = () => {
     const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] = useSignInWithEmailAndPassword(auth);
-    const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
-
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     const [passShown, setPassShown] = useState(false);
 
 
     let errorMsg;
-    if (emailError || googleError) {
+    if (emailError) {
 
         // EMAIL LOGIN ERROR CUSTOMIZE 
         if (emailError) {
@@ -47,28 +46,14 @@ const Login = () => {
             }
         }
 
-        // GOOGLE LOGIN ERROR CUSTOMIZE 
-        if (googleError) {
-            if (googleError.code === "auth/popup-closed-by-user") {
-                errorMsg = <p
-                    className='text-center text-red-500 font-semibold bg-red-200 p-3 rounded-lg'>
-                    Popup closed!
-                </p>
-            }
-        }
-
     }
 
 
 
     // SUBMIT THE FORM 
     const onSubmit = async (data) => {
-        console.log(data);
-
         const email = data.email;
         const password = data.password;
-
-        console.log(data.email)
 
         try {
             const confiq = {
@@ -76,25 +61,19 @@ const Login = () => {
                     'Content-type': 'application/json'
                 }
             }
-            const { userInfo } = await axios.post('http://localhost:5000/api/user/login', { email, password }, confiq);
-
-            console.log(userInfo)
-            signInWithEmailAndPassword(data.email, data.password);
-            toast.success(`Login successfully`);
-            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            const { data } = await axios.post('http://localhost:5000/api/user/login', { email, password }, confiq);
+            localStorage.setItem('userInfo', JSON.stringify(data));
         }
-
-        catch (error) {
-
-        }
-
+        catch (error) { }
+        await signInWithEmailAndPassword(data.email, data.password);
     };
 
-    if (emailLoading || googleLoading) {
-        return <p>Loading...</p>;
+    if (emailLoading) {
+        return <Loading></Loading>;
     }
 
-    if (emailUser || googleUser) {
+    if (emailUser) {
+        toast.success(`Login successfully`);
         navigate('/chats')
     }
 
