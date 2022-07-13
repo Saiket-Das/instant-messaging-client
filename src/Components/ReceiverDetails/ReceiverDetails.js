@@ -7,7 +7,7 @@ import { faPhone, faEnvelope, faFaceAngry } from '@fortawesome/free-solid-svg-ic
 const ReceiverDetails = () => {
     return (
         <div className=''>
-            <div className="h-screen shadow-2xl mr-4 pt-5 ">
+            <div className=" h-96 shadow-2xl mr-4 pt-5 ">
                 <div className="w-80 m-auto max-w-sm">
 
                     <div className=''>

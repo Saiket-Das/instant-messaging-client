@@ -4,10 +4,14 @@ import ChatBox from '../../../../Components/ChatBox/ChatBox';
 import ReceiverDetails from '../../../../Components/ReceiverDetails/ReceiverDetails';
 import Header from '../Header/Header';
 
+
+
 const Chats = () => {
     return (
         <div>
             <Header></Header>
+
+
 
             {/* CHAT RELATED  */}
             <div className='grid grid-cols-4'>
