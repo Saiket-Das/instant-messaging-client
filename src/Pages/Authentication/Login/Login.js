@@ -73,8 +73,8 @@ const Login = () => {
     }
 
     if (emailUser) {
-        toast.success(`Login successfully`);
         navigate('/chats')
+        toast.success('Login successfully');
     }
 
 

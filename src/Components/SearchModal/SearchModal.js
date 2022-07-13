@@ -21,7 +21,6 @@ const SearchModal = ({ setSearchResults, user }) => {
                 },
             };
             const { data } = await axios.get(`http://localhost:5000/api/user?search=${searchInput}`, config);
-
             setSearchResults(data);
         }
         catch (error) {
@@ -32,7 +31,6 @@ const SearchModal = ({ setSearchResults, user }) => {
 
     return (
         <div className='mt-5'>
-
 
             <div className='flex gap-2'>
                 <input

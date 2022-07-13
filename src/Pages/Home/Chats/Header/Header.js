@@ -105,14 +105,7 @@ const Header = () => {
                     <div className="modal">
                         <div className="modal-box">
 
-                            <div className='flex'>
-                                {/* <img src={myPhoto} className='w-32' alt="" /> */}
-                                <div>
-                                    <h3 className="font-semibold text-lg">{user?.displayName}</h3>
-                                    <p>{user?.email}</p>
-                                </div>
-
-                            </div>
+                            {/* '''''''' */}
 
                             <div className="modal-action">
                                 <label htmlFor="my-profile-modal" className="btn btn-ghost hover:text-white text-xl">

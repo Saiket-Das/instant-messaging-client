@@ -44,6 +44,7 @@ const Signup = () => {
 
     if (user) {
         navigate('/chats')
+        toast.success(`Signup successfully`);
     }
 
 
@@ -93,11 +94,10 @@ const Signup = () => {
                     }
                 }
                 const { data } = await axios.post('http://localhost:5000/api/user', {
-                    name, email, password, myPhoto,
+                    name, email, password, photo: myPhoto,
                 }, confiq);
 
                 localStorage.setItem("userInfo", JSON.stringify(data));
-                toast.success(`Login successfully`);
             }
             catch {
             }
